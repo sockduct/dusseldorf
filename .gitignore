@@ -1,0 +1,14 @@
+# Python virtual environment:
+.venv/
+
+# Python bytecode cache directory:
+__pycache__/
+
+# Vim temporary files:
+*.swp
+
+# Local database:
+db.sqlite3
+
+# Environment variables:
+.env
