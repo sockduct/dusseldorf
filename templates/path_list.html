@@ -1,13 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'path_base.html' %}
 {% load static %}
 
 {% block title %}The Developer Nexus - Paths{% endblock title %}
+{% block header %}The Developer Nexus - Paths{% endblock header %}
 
 {% block content %}
-    {% for path in object_list %}
+    {% for area in object_list %}
         <div class="path-entry">
-            <h2><a href="{% url 'path_detail' path.pk %}">{{ path.name }}</a></h2>
-            <p>{{ path.description }}</p>
+            <h2><a href="{% url 'path_detail' area.pk %}">{{ area.name }}</a></h2>
+            <p>{{ area.description }}</p>
+            <h3>[{{ area.subjects.count }} supporting subjects]</h3>
         </div>
     {% endfor %}
 {% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'path_base.html' %}
+{% load static %}
+
+{% block title %}The Developer Nexus - Subjects{% endblock title %}
+{% block header %}The Developer Nexus - Subjects{% endblock header %}
+
+{% block content %}
+    {% for subject in object_list %}
+        <div class="path-entry">
+            <h2><a href="{% url 'subject_detail' subject.pk %}">{{ subject.name }}</a></h2>
+            <p>{{ subject.description }}</p>
+            <h3>[{{ subject.resources.count }} supporting resources]</h3>
+        </div>
+    {% endfor %}
+{% endblock content %}

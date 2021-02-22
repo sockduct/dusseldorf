@@ -1,7 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'path_base.html' %}
 {% load static %}
 
-{% block title %}The Developer Nexus - Path Details{% endblock title %}
+{% block title %}The Developer Nexus - Path Detail{% endblock title %}
+{% block header %}The Developer Nexus - Path Detail{% endblock header %}
 
 {% block content %}
     <div class="path-entry">
@@ -9,8 +10,13 @@
         <hr>
         <p>{{ area.description }}</p>
         <hr>
-        {% for subject in area.subject_set.all %}
-            <h5>{{ subject.name }}</h5>
+        <h3>Supporting Subjects</h3>
+        <hr>
+        {% for subject in area.subjects.all %}
+            <p>
+                <a href="{% url 'subject_detail' subject.pk %}">{{ subject.name }}</a> |
+                [{{ subject.resources.count }} supporting resources]</h3>
+            </p>
         {% endfor %}
     </div>
 {% endblock content %}

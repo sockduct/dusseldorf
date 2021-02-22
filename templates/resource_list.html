@@ -1,0 +1,16 @@
+{% extends 'path_base.html' %}
+{% load static %}
+
+{% block title %}The Developer Nexus - Resources{% endblock title %}
+{% block header %}The Developer Nexus - Resources{% endblock header %}
+
+{% block content %}
+    {% for resource in object_list %}
+        <div class="path-entry">
+            <h2><a href="{% url 'resource_detail' resource.pk %}">{{ resource.name }}</a></h2>
+            <h3>[Resource type:  {{ resource.type }}]</h3>
+            <p>{{ resource.description }}</p>
+            <h3><a href="{{ resource.url }}">Additional Resource Information</a> (External Site)</h3>
+        </div>
+    {% endfor %}
+{% endblock content %}
