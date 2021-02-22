@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}The Developer Nexus - Path Details{% endblock title %}
+
+{% block content %}
+    <div class="path-entry">
+        <h2>{{ area.name }}</h2>
+        <hr>
+        <p>{{ area.description }}</p>
+        <hr>
+        {% for subject in area.subject_set.all %}
+            <h5>{{ subject.name }}</h5>
+        {% endfor %}
+    </div>
+{% endblock content %}

@@ -3,18 +3,23 @@ from django.contrib import admin
 from .models import Post, PostType, Tag
 
 # Register your models here.
+''' # Don't believe I want/need this:
 class TagInline(admin.TabularInline):
     model = Tag.posts.through
     # Default = display 3 extra (emptry) rows:
     extra = 1
+'''
+
+class TagAdmin(admin.ModelAdmin):
+    model = Tag
 
 class PostTypeAdmin(admin.ModelAdmin):
     model = PostType
 
 class PostAdmin(admin.ModelAdmin):
     model = Post
-    inlines = [TagInline]
+    # inlines = [TagInline]
 
 admin.site.register(PostType, PostTypeAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(Tag)
+admin.site.register(Tag, TagAdmin)

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}The Developer Nexus - Paths{% endblock title %}
+
+{% block content %}
+    {% for path in object_list %}
+        <div class="path-entry">
+            <h2><a href="{% url 'path_detail' path.pk %}">{{ path.name }}</a></h2>
+            <p>{{ path.description }}</p>
+        </div>
+    {% endfor %}
+{% endblock content %}
