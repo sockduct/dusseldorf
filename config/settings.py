@@ -141,3 +141,8 @@ STATICFILES_FINDERS = [
 
 # Custom User Model:
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+# Redirect defaults
+LOGIN_REDIRECT_URL = 'post_list'
+LOGOUT_REDIRECT_URL = 'post_list'
