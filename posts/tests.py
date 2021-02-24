@@ -43,9 +43,11 @@ class PostTests(TestCase):
         self.assertEqual(str(post), post.title)
 
     def test_post_content(self):
+        self.assertEqual(f'{self.post.type}', self.testtype)
         self.assertEqual(f'{self.post.title}', self.testtitle)
-        self.assertEqual(f'{self.post.author}', self.testuser)
         self.assertEqual(f'{self.post.body}', self.testbody)
+        self.assertEqual(f'{self.post.author}', self.testuser)
+        self.assertEqual(f'{self.post.tags.first().name}', self.testtag)
 
     def test_post_list_view(self):
         response = self.client.get(reverse('post_list'))

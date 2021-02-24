@@ -10,7 +10,9 @@
             <h2><a href="{% url 'resource_detail' resource.pk %}">{{ resource.name }}</a></h2>
             <h3>[Resource type:  {{ resource.type }}]</h3>
             <p>{{ resource.description }}</p>
-            <h3><a href="{{ resource.url }}">Additional Resource Information</a> (External Site)</h3>
+            {% if resource.url %}
+                <h3><a href="{{ resource.url }}">Additional Resource Information</a> (External Site)</h3>
+            {% endif %}
         </div>
     {% endfor %}
 {% endblock content %}
