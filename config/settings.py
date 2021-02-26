@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # 3rd party:
+    'crispy_forms',
+
     # Local apps:
     'accounts',
     'paths',
@@ -146,3 +149,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # Redirect defaults
 LOGIN_REDIRECT_URL = 'post_list'
 LOGOUT_REDIRECT_URL = 'post_list'
+
+
+# Django Crispy Forms:
+CRISPY_TEMPLATE_PACK='bootstrap4'
