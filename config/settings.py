@@ -38,9 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # 3rd party:
     'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
 
     # Local apps:
     'accounts',
@@ -152,4 +157,40 @@ LOGOUT_REDIRECT_URL = 'post_list'
 
 
 # Django Crispy Forms:
-CRISPY_TEMPLATE_PACK='bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+# Django All Auth Config:
+SITE_ID = 1
+
+# Authentication:
+AUTHENTICATION_BACKENDS = (
+    # Django default:
+    'django.contrib.auth.backends.ModelBackend',
+
+    # Addition for Django All Auth:
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+# Django All Auth Settings:
+
+# Change to allow E-mail only registration:
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# Change to allow E-mail only registration:
+ACCOUNT_EMAIL_REQUIRED = True
+# To disable E-mail verification, can also set to 'mandatory':
+# ACCOUNT_EMAIL_VERIFICATION = 'none'
+# Overrides LOGOUT_REDIRECT_URL:
+ACCOUNT_LOGOUT_REDIRECT = 'post_list'
+# Default is None which asks user if they want to be remembered:
+ACCOUNT_SESSION_REMEMBER = True
+# Default is True:
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+# Change to allow E-mail only registration:
+ACCOUNT_UNIQUE_EMAIL = True
+# Default is True, change to False to allow E-mail only registration:
+ACCOUNT_USERNAME_REQUIRED = False
+
+# E-mail:
+# Use the console instead of a SMTP server/relay:
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

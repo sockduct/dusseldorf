@@ -21,10 +21,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # User management:
-    path('accounts/', include('django.contrib.auth.urls')),
+    # path('accounts/', include('django.contrib.auth.urls')),
+    # Replaced default with django-allauth:
+    path('accounts/', include('allauth.urls')),
 
     # Local apps:
-    path('accounts/', include('accounts.urls')),
+    # Replaced with django-allauth:
+    # path('accounts/', include('accounts.urls')),
     path('paths/', include('paths.urls')),
     path('', include('posts.urls')),
 ]
