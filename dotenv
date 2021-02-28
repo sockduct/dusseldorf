@@ -1,0 +1,21 @@
+#
+# This is a template file
+# Use this file for secrets or settings that change from local development/test to production
+#
+# Note - if creating the .env in PowerShell, make sure the file encoding is ASCII and not UTF16:
+# gc dotenv | set-content -encoding ascii .env
+#
+# Rename to ".env" and configure the variables below appropriately:
+#
+# Django Environment Variables:
+#
+# Database connection string:
+export DJANGO_DATABASE_URL=sqlite:///db.sqlite3
+#
+# True for testing, False for production:
+export DJANGO_DEBUG=True
+#
+#
+# Generate good secret key:
+# python -c 'import secrets; print(secrets.token_urlsafe(64))' >> .env
+export DJANGO_SECRET_KEY=<generated-token-from-above>

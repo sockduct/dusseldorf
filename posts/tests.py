@@ -151,6 +151,19 @@ class PostPagesTests(TestCase):
         self.assertNotContains(response, 'Hi there! I should not be on the page.')
         self.assertTemplateUsed(response, 'post_edit.html')
 
+    def test_post_update_view_reverse(self):
+        post_title = 'App Test Creation - Updated'
+        post_body = 'This is an updated application test creation post...'
+
+        response = self.client.post(reverse('post_edit', args='1'), {
+            'type': self.posttype.id,
+            'title': post_title,
+            'body': post_body,
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Post.objects.last().title, post_title)
+        self.assertEqual(Post.objects.last().body, post_body)
+
     def test_post_delete_view(self):
         response = self.client.get('/post/1/delete/')
         no_response = self.client.get('/post/1000000/delete/')
@@ -160,6 +173,10 @@ class PostPagesTests(TestCase):
         self.assertContains(response, self.testtitle)
         self.assertNotContains(response, 'Hi there! I should not be on the page.')
         self.assertTemplateUsed(response, 'post_delete.html')
+
+    def test_post_delete_view_reverse(self):
+        response = self.client.post(reverse('post_delete', args='1'))
+        self.assertEqual(response.status_code, 302)
 
 class AboutPageTests(TestCase):
     def setUp(self):
