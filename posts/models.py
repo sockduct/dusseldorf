@@ -58,4 +58,6 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
+        # This name lines up with the name= in urls.py:
         return reverse('post_detail', args=[str(self.id)])
+        # Note - self.id matches the object primary key (pk)

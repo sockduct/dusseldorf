@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}The Developer Nexus - New Post{% endblock title %}
+{% block header %}The Developer Nexus - New Post{% endblock header %}
+
+{% block content %}
+    <div class="post-entry">
+        <h1>New Post</h1>
+        <hr>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input class="btn btn-success" type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock content %}

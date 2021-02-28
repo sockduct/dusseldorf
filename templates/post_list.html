@@ -4,6 +4,13 @@
 {% block title %}The Developer Nexus - Posts{% endblock title %}
 {% block header %}The Developer Nexus - Posts{% endblock header %}
 
+{% block subheader %}
+    <hr>
+    <h5>
+        <a class="text-success" href="{% url 'post_new' %}">➕ Add Post</a>
+    </h5>
+{% endblock subheader %}
+
 {% block content %}
     {% for post in object_list %}
         <div class="post-entry">

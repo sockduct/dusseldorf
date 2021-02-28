@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # 3rd party:
+    'debug_toolbar',
     'crispy_forms',
     'allauth',
     'allauth.account',
@@ -54,6 +55,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 3rd party:
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
+    # Default:
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,6 +66,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # 3rd party:
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -191,6 +199,20 @@ ACCOUNT_UNIQUE_EMAIL = True
 # Default is True, change to False to allow E-mail only registration:
 ACCOUNT_USERNAME_REQUIRED = False
 
+
 # E-mail:
 # Use the console instead of a SMTP server/relay:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# Django Debug Toolbar:
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+# Django Debug Toolbar Notes:
+# For Windows:
+# If, "get-itemproperty -path 'Registry::HKCR\.js\' -name 'Content Type'"
+# shows 'Content Type' = 'text/plain', you must change it as follows:
+# "set-itemproperty -path 'Registry::HKCR\.js\' -name 'Content Type' -Value 'text/javascript'"
+# If you change this, you must quit all browser instances and then re-launch the site
