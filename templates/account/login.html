@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block title %}Login{% endblock title %}
+{% block title %}The Developer Nexus - Login{% endblock title %}
+{% block header %}The Developer Nexus - Login{% endblock header %}
 
 {% block content %}
-    <h1>Login</h1>
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
