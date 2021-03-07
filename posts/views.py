@@ -1,14 +1,11 @@
 # from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .models import Post, PostType
 
 # Create your views here.
-class AboutPageView(TemplateView):
-    template_name = 'about.html'
-
 class PostCreateView(CreateView):
     model = Post
     template_name = 'post_new.html'

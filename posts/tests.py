@@ -3,10 +3,7 @@ from django.test import TestCase
 from django.urls import resolve, reverse
 
 from .models import Post, PostType, Tag
-from .views import (
-    AboutPageView, PostCreateView, PostDeleteView,
-    PostDetailView, PostEditView, PostListView
-)
+from .views import PostCreateView, PostDeleteView, PostDetailView, PostEditView, PostListView
 
 # Create your tests here.
 class PostModelsTests(TestCase):
@@ -177,24 +174,3 @@ class PostPagesTests(TestCase):
     def test_post_delete_view_reverse(self):
         response = self.client.post(reverse('post_delete', args='1'))
         self.assertEqual(response.status_code, 302)
-
-class AboutPageTests(TestCase):
-    def setUp(self):
-        url = reverse('about')
-        self.response = self.client.get(url)
-
-    def test_aboutpage_status_code(self):
-        self.assertEqual(self.response.status_code, 200)
-
-    def test_aboutpage_template(self):
-        self.assertTemplateUsed(self.response, 'about.html')
-
-    def test_aboutpage_contains_correct_html(self):
-        self.assertContains(self.response, 'About The Developer Nexus')
-
-    def test_aboutpage_does_not_contain_incorrect_html(self):
-        self.assertNotContains(self.response, 'Hi there! I should not be on the page.')
-
-    def test_aboutpage_url_resolves_aboutpageview(self):
-        view = resolve('/about/')
-        self.assertEqual(view.func.__name__, AboutPageView.as_view().__name__)

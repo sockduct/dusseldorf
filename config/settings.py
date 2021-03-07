@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Used by Django-AllAuth:
     'django.contrib.sites',
 
     # 3rd party:
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     'accounts',
     'paths',
     'posts',
+    'pages',
 ]
 
 MIDDLEWARE = [
@@ -103,14 +105,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-'''
 DATABASES = {
     'default': env.dj_db_url('DJANGO_DATABASE_URL',
     default='sqlite:///db.sqlite3')
@@ -217,6 +211,8 @@ ACCOUNT_USERNAME_REQUIRED = False
 # E-mail:
 # Use the console instead of a SMTP server/relay:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+DEFAULT_FROM_EMAIL = 'admin@developernexus.herokuapp.com'
 
 
 # Django Debug Toolbar:

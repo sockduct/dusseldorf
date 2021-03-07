@@ -32,6 +32,7 @@ urlpatterns = [
     # Replaced with django-allauth:
     # path('accounts/', include('accounts.urls')),
     path('paths/', include('paths.urls')),
+    path('', include('pages.urls')),
     path('', include('posts.urls')),
 ]
 
