@@ -7,9 +7,11 @@
 {% block subheader %}
     <hr>
     <h5>
-        <a class="text-success" href="{% url 'post_new' %}">➕ Add Post</a> |
-        <a class="text-warning" href="{% url 'post_edit' post.pk %}">🖉 Edit Post</a> |
-        <a class="text-danger" href="{% url 'post_delete' post.pk %}">❌ Delete Post</a>
+        <a class="text-success" href="{% url 'post_new' %}">➕ Add Post</a>
+        {% if user.is_authenticated and user.username == post.author.username %}
+            | <a class="text-warning" href="{% url 'post_edit' post.pk %}">🖉 Edit Post</a>
+            | <a class="text-danger" href="{% url 'post_delete' post.pk %}">❌ Delete Post</a>
+        {% endif %}
     </h5>
 {% endblock subheader %}
 

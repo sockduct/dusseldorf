@@ -49,8 +49,10 @@ INSTALLED_APPS = [
     # Used by Django-AllAuth:
     'django.contrib.sites',
 
-    # 3rd party:
+    # 3rd party debugging:
     'debug_toolbar',
+
+    # 3rd party:
     'crispy_forms',
     'allauth',
     'allauth.account',
@@ -65,7 +67,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # 3rd party:
+    # 3rd party debugging:
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     # Default:
@@ -76,9 +78,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # 3rd party:
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -208,19 +207,35 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 
 
-# E-mail:
+# E-mail Settings:
+#
 # Use the console instead of a SMTP server/relay:
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-DEFAULT_FROM_EMAIL = 'admin@developernexus.herokuapp.com'
+#
+# Use a SMTP server:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#
+# EMAIL_BACKEND = env.str('DJANGO_EMAIL_BACKEND')
+#
+ADMIN_EMAIL = env.str('DJANGO_ADMIN_EMAIL')
+# Make sure this account/provider email differ from superuser email or weird errors will result!
+DEFAULT_FROM_EMAIL = env.str('DJANGO_DEFAULT_FROM_EMAIL')
+#
+EMAIL_HOST = env.str('DJANGO_EMAIL_HOST')
+EMAIL_HOST_USER = env.str('DJANGO_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('DJANGO_EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env.int('DJANGO_EMAIL_PORT')
+EMAIL_USE_TLS = env.bool('DJANGO_EMAIL_USE_TLS')
 
 
 # Django Debug Toolbar:
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+if DEBUG:
+    INTERNAL_IPS = [
+        '127.0.0.1',
+    ]
 
 # Django Debug Toolbar Notes:
+#
 # For Windows:
 # If, "get-itemproperty -path 'Registry::HKCR\.js\' -name 'Content Type'"
 # shows 'Content Type' = 'text/plain', you must change it as follows:
