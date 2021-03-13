@@ -33,7 +33,7 @@ SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
 # Note - it doesn't appear that the test server supports IPv6
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['developernexus.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
