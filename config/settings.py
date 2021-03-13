@@ -229,11 +229,12 @@ ACCOUNT_USERNAME_REQUIRED = False
 
 # E-mail Settings:
 #
-# Use the console instead of a SMTP server/relay:
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#
-# Use a SMTP server:
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+if DEBUG:
+    # Use the console instead of a SMTP server/relay:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    # Use a SMTP server:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #
 # EMAIL_BACKEND = env.str('DJANGO_EMAIL_BACKEND')
 #
