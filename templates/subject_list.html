@@ -10,6 +10,8 @@
             <h2><a href="{% url 'subject_detail' subject.pk %}">{{ subject.name }}</a></h2>
             <p>{{ subject.description }}</p>
             <h3>[{{ subject.resources.count }} supporting resources]</h3>
+            <br>
+            <br>
         </div>
     {% endfor %}
 {% endblock content %}
