@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # 3rd party debugging:
-    'debug_toolbar',
+    # 'debug_toolbar',
+    # Insert conditionally if DEBUG True
 
     # 3rd party:
     'crispy_forms',
@@ -68,9 +69,16 @@ INSTALLED_APPS = [
     'pages',
 ]
 
+# Django Debug Toolbar:
+if DEBUG:
+    target_index = INSTALLED_APPS.index('crispy_forms')
+    INSTALLED_APPS.insert(target_index, 'debug_toolbar')
+
+
 MIDDLEWARE = [
     # 3rd party debugging:
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # Insert conditionally if DEBUG True
 
     # Default:
     'django.middleware.security.SecurityMiddleware',
@@ -83,6 +91,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Django Debug Toolbar:
+if DEBUG:
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -248,3 +261,12 @@ if DEBUG:
 # shows 'Content Type' = 'text/plain', you must change it as follows:
 # "set-itemproperty -path 'Registry::HKCR\.js\' -name 'Content Type' -Value 'text/javascript'"
 # If you change this, you must quit all browser instances and then re-launch the site
+
+
+# Secure Deployment settings:
+if not DEBUG:
+    # Need to experiment and site/domain compatible with HSTS:
+    # SECURE_HSTS_SECONDS = 3600
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
