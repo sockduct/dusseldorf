@@ -10,7 +10,8 @@
 # Django Environment Variables:
 #
 # Database connection string:
-export DJANGO_DATABASE_URL=sqlite:///db.sqlite3
+export DATABASE_URL=sqlite:///db.sqlite3
+# Don't use Django prefix here because Heroku doesn't!
 #
 # True for testing, False for production:
 export DJANGO_DEBUG=True
