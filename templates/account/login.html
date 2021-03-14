@@ -1,18 +1,42 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load account socialaccount %}
 
 {% block title %}The Developer Nexus - Login{% endblock title %}
 {% block header %}The Developer Nexus - Login{% endblock header %}
 
 {% block content %}
-    <form method="post">
+    <form class="login" method="post" action="{% url 'account_login' %}">
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="btn btn-success" type="submit">Login</button>
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button class="primaryAction btn btn-success" type="submit">{% trans "Developer Nexus Login" %}</button>
     </form>
+
     <hr>
-    <a href="{% url 'account_reset_password' %}">I forgot my password</a>
+
+    <a href="{% provider_login_url 'github' %}?process=login">
+        <img src="/static/img/octocat.png" alt="GitHub Mascot" width="200" height="166.25">
+        <button class="button secondaryAction btn btn-primary" type="submit">
+            {% trans "Login with GitHub" %}
+        </button>
+    </a>
+
     <hr>
-    <a href="{% url 'account_signup' %}">I need to sign up for an account</a>"
+
+    <a class="d-inline" href="{% url 'account_reset_password' %}">
+        <button class="button secondaryAction btn btn-warning" type="submit">
+            {% trans "I forgot my password" %}
+        </button>
+    </a>
+    <a class="d-inline ml-5" href="{% url 'account_signup' %}">
+        <button class="button secondaryAction btn btn-info" type="submit">
+            {% trans "I need to sign up for an account" %}
+        </button>
+    </a>
+
     <hr>
 {% endblock content %}

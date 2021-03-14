@@ -3,9 +3,18 @@
 <!-- Subheader for Paths: -->
 {% block subheader %}
     <hr>
-    <h5>
-        <a href="{% url 'path_list' %}">Areas</a> |
-        <a href="{% url 'subject_list' %}">Subjects</a> |
-        <a href="{% url 'resource_list' %}">Resources</a>
-    </h5>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if request.path == '/paths/' or request.path|slice:'12' == '/paths/area/' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'path_list' %}">Areas</a>
+            </li>
+            <li class="nav-item {% if request.path == '/paths/subjects/' or request.path|slice:'15' == '/paths/subject/' %}active{% endif %}">
+                <a class="nav-link ml-4" href="{% url 'subject_list' %}">Subjects</a>
+            </li>
+            <li class="nav-item {% if request.path == '/paths/resources/' or request.path|slice:'16' == '/paths/resource/' %}active{% endif %}">
+                <a class="nav-link ml-4" href="{% url 'resource_list' %}">Resources</a>
+            </li>
+         </ul>
+    </nav>
 {% endblock subheader %}

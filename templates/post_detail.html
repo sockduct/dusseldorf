@@ -6,13 +6,21 @@
 
 {% block subheader %}
     <hr>
-    <h5>
-        <a class="text-success" href="{% url 'post_new' %}">➕ Add Post</a>
-        {% if user.is_authenticated and user.username == post.author.username %}
-            | <a class="text-warning" href="{% url 'post_edit' post.pk %}">🖉 Edit Post</a>
-            | <a class="text-danger" href="{% url 'post_delete' post.pk %}">❌ Delete Post</a>
-        {% endif %}
-    </h5>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="text-success" href="{% url 'post_new' %}">➕ Add Post</a>
+            </li>
+            {% if user.is_authenticated and user.username == post.author.username %}
+                <li class="nav-item">
+                    <a class="ml-4 text-warning" href="{% url 'post_edit' post.pk %}">🖉 Edit Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="ml-4 text-danger" href="{% url 'post_delete' post.pk %}">❌ Delete Post</a>
+                </li>
+            {% endif %}
+         </ul>
+    </nav>
 {% endblock subheader %}
 
 {% block content %}

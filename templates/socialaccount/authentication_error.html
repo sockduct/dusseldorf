@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+<!-- Original title:
+    The Developer Nexus - Social Network Login Failure
+-->
+{% block title %}{% trans "The Developer Nexus - GitHub Login Failure" %}{% endblock title %}
+{% block header %}{% trans "The Developer Nexus - GitHub Login Failure" %}{% endblock header %}
+
+{% block content %}
+    <p>
+        <!-- Original message:
+            An error occurred while attempting to login via your social network account.
+        -->
+        {% trans "An error occurred while attempting to login via your GitHub account." %}
+    </p>
+{% endblock content %}

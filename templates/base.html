@@ -8,113 +8,132 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}The Developer Nexus{% endblock title %}</title>
+
+    <!-- Favorite Icon (multi-platform): -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'img/site.webmanifest' %}">
+
     <!-- Load Bootstrap CSS: -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 
 <body>
-    <header>
-        <h1>{% block header %}The Developer Nexus{% endblock header %}</h1>
-        <hr>
+    <!-- Main page container: -->
+    <div class="container">
+        <header>
+            <a href="{% url 'post_list' %}">
+                <img src="{% static 'img/stg-nexus-icon.png' %}" class="img-thumbnail float-left mr-2" alt="Developer Nexus Icon">
+            </a>
+            <h1>{% block header %}The Developer Nexus{% endblock header %}</h1>
+            <hr>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'post_list' %}">Posts (Home)</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <!-- Idea is to put the brand icon or text here, but I don't like how it looks... -->
+                <!-- <a class="navbar-brand" href="{% url 'post_list' %}">Posts</a> -->
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <!--<li class="nav-item active">-->
-                    <li class="nav-item">
-                        <!--<a class="nav-link" href="{% url 'path_list' %}">Paths <span class="sr-only">(current)</span></a>-->
-                        <a class="nav-link" href="{% url 'path_list' %}">Paths</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
-                    </li>
-                    <!--
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
-                    -->
-                <!--
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                -->
-                </ul>
-                <ul class="navbar-nav mr-auto">
-                    {% if not user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item {% if request.path == '/' or request.path|slice:'6' == '/post/' %}active{% endif %}">
+                            <!-- This seems to result in multiple rows which I don't like: -->
+                            <!-- <a class="nav-link" href="{% url 'path_list' %}">Paths <span class="sr-only">(current)</span></a> -->
+                            <a class="nav-link" href="{% url 'post_list' %}">Posts</a>
                         </li>
-                    {% endif %}
-
-                    {% if user.is_authenticated %}
+                        <li class="nav-item {% if request.path == '/paths/' or request.path|slice:'7' == '/paths/' %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'path_list' %}">Paths</a>
+                        </li>
+                        <li class="nav-item {% if request.path == '/about/' %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'about' %}">About</a>
+                        </li>
+                        <li class="nav-item {% if request.path == '/contact/' %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+                        </li>
+                        <!--
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ user.username }}
+                            Dropdown
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {% if user.is_superuser %}
-                                    <a class="dropdown-item" href="{% url 'admin:index' %}">Admin Site</a>
-                                    <div class="dropdown-divider"></div>
-                                {% endif %}
-
-                                <a class="dropdown-item" href="{% url 'account_email' %}">Manage E-mail Addresses</a>
-                                <a class="dropdown-item" href="{% url 'socialaccount_connections' %}">Manage GitHub Connection</a>
-                                <a class="dropdown-item" href="{% url 'account_change_password' %}">Change Password</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li>
-                    {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                         </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
+                        -->
+                    <!--
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    -->
+                    </ul>
+                    <ul class="navbar-nav mr-auto">
+                        {% if not user.is_authenticated %}
+                            <li class="nav-item {% if request.path == '/accounts/signup/' %}active{% endif %}">
+                                <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+                            </li>
+                        {% endif %}
 
-        {% block subheader %}
-        {% endblock subheader %}
+                        {% if user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ user.username }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    {% if user.is_superuser %}
+                                        <a class="dropdown-item" href="{% url 'admin:index' %}">Admin Site</a>
+                                        <div class="dropdown-divider"></div>
+                                    {% endif %}
 
-        <hr>
+                                    <a class="dropdown-item" href="{% url 'account_email' %}">Manage E-mail Addresses</a>
+                                    <a class="dropdown-item" href="{% url 'socialaccount_connections' %}">Manage GitHub Connection</a>
+                                    <a class="dropdown-item" href="{% url 'account_change_password' %}">Change Password</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item {% if request.path == '/accounts/login/' %}active{% endif %}">
+                                <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
 
-        <!-- Display message notifications: -->
-        {% if messages %}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                {% for message in messages %}
-                    <strong>{{ message }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                {% endfor %}
-            </div>
-        {% endif %}
-    </header>
+            {% block subheader %}
+            {% endblock subheader %}
 
-    <div class="container">
-        {% block content %}
-        {% endblock content %}
+            <hr>
+
+            <!-- Display message notifications: -->
+            {% if messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {% for message in messages %}
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </header>
+
+        <div class="container">
+            {% block content %}
+            {% endblock content %}
+        </div>
     </div>
 
     <!-- Load Bootstrap JavaScript: -->

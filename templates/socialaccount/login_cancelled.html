@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+<!-- Original title:
+    The Developer Nexus - Login Cancelled
+-->
+{% block title %}{% trans "The Developer Nexus - GitHub Login Cancelled" %}{% endblock title %}
+{% block header %}{% trans "The Developer Nexus - GitHub Login Cancelled" %}{% endblock header %}
+
+{% block content %}
+    <p>{% blocktrans %}
+        <!-- Original message:
+            You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to sign in.
+        -->
+        You cancelled the login to our site using a GitHub account.
+        If this was a mistake, please proceed to <a href="{{login_url}}">login</a>.
+    {% endblocktrans %}</p>
+{% endblock content %}
