@@ -3,8 +3,8 @@
 {% load i18n %}
 {% load account socialaccount %}
 
-{% block title %}The Developer Nexus - Login{% endblock title %}
-{% block header %}The Developer Nexus - Login{% endblock header %}
+{% block title %}{% trans "The Developer Nexus - Login" %}{% endblock title %}
+{% block header %}{% trans "The Developer Nexus - Login" %}{% endblock header %}
 
 {% block content %}
     <form class="login" method="post" action="{% url 'account_login' %}">

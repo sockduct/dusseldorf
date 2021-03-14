@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "The Developer Nexus - Verify Your E-mail Address" %}{% endblock title %}
+{% block header %}{% trans "The Developer Nexus - Verify Your E-mail Address" %}{% endblock header %}
+
+{% block content %}
+    <p>{% trans "We sent an e-mail to you for verification." %}</p>
+    <p>{% trans "Please follow the link provided to finalize the signup process." %}</p>
+    <p>{% trans "Note that it can take up to several hours before the e-mail shows up in your inbox." %}</p>
+    <p>{% trans "Please make sure you also check your Junk e-mail." %}</p>
+{% endblock content %}

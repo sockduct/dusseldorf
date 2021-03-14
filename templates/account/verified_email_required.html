@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "The Developer Nexus - Verified E-mail Required" %}{% endblock title %}
+{% block header %}{% trans "The Developer Nexus - Verifed E-mail Required" %}{% endblock header %}
+
+{% block content %}
+    {% url 'account_email' as email_url %}
+
+    <p>{% trans "This part of the site requires e-mail verification." %}</p>
+    <p>{% trans "We sent an e-mail to you for verification." %}</p>
+    <p>{% trans "Please follow the link provided to verify your e-mail." %}</p>
+    <p>{% trans "Note that it can take up to several hours before the e-mail shows up in your inbox." %}</p>
+    <p>{% trans "Please make sure you also check your Junk e-mail." %}</p>
+
+    <p>{% blocktrans %}
+        <strong>Note:</strong>
+        <span class="ml-1">You can still <a href="{{ email_url }}">change your e-mail address</a>.</span>
+    {% endblocktrans %}</p>
+{% endblock content %}
