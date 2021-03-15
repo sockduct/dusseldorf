@@ -61,3 +61,24 @@ class Post(models.Model):
         # This name lines up with the name= in urls.py:
         return reverse('post_detail', args=[str(self.id)])
         # Note - self.id matches the object primary key (pk)
+        # When posting, redirect is to this view
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
+    body = models.CharField(max_length=1000)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+    )
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.comment
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.post.id)])

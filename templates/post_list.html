@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}The Developer Nexus - Posts{% endblock title %}
 {% block header %}The Developer Nexus - Posts{% endblock header %}
@@ -17,16 +18,40 @@
 
 {% block content %}
     {% for post in object_list %}
-        <div class="post-entry">
-            <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
-            <h4>{{ post.type }} by {{ post.author }} at {{ post.created }}</h4>
-            <p>{{ post.body }}</p>
-            {% for tag in post.tags.all %}
-                <h5>{{ tag.name }}</h5>
-            {% endfor %}
+        <div class="card post-entry">
+            <div class="card-header">
+                <a href="{% url 'post_detail' post.pk %}">
+                    <span class="font-weight-bold">{{ post.title }}</span>
+                </a>
+                <span class="m-3">&middot;</span>
+                <span class="text-muted">{{ post.type }} by {{ post.author }} - {{ post.created|naturaltime }}</span>
+            </div>
+            <div class="card-body">
+                {{ post.body }}
+            </div>
+            {% if post.tags.all.count >= 1  or post.comments.all.count >= 1 %}
+                <div class="card-footer text-muted">
+                    {% for tag in post.tags.all %}
+                        {{ tag.name }}
+                    {% endfor %}
 
-            <br>
-            <br>
+                    <!-- I'm sure there's a more efficient way to do this section: -->
+                    {% if post.tags.all.count >= 1 %}
+                        <span class="m-3">&middot;</span>
+                    {% endif %}
+
+                    {% if post.comments.all.count == 0 %}
+                        no comments
+                    {% elif post.comments.all.count == 1 %}
+                        1 comment
+                    {% else %}
+                        {{ post.comments.all.count }} comments
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
+
+        <br>
+        <br>
     {% endfor %}
 {% endblock content %}

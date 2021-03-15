@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Used by Django-AllAuth:
     'django.contrib.sites',
+    # For human/naturaltime:
+    'django.contrib.humanize',
 
     # 3rd party debugging:
     # 'debug_toolbar',
@@ -151,7 +153,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# Default - change to my time zone:
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
