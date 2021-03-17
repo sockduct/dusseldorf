@@ -3,9 +3,46 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from .models import Post, PostType
+from .models import Comment, Post, PostType
 
 # Create your views here.
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    template_name = 'comment_new.html'
+    fields = ['body']
+
+    def form_valid(self, form):
+        post_id = self.request.path.split('/')[2]
+        form.instance.author = self.request.user
+        form.instance.post = Post.objects.get(id=post_id)
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post_id = self.request.path.split('/')[2]
+        context['post'] = Post.objects.get(id=post_id)
+        return context
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = 'comment_delete.html'
+
+    ### Want post_detail, but then need to pass PK and not sure how...
+    success_url = reverse_lazy('post_list')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
+
+class CommentEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    template_name = 'comment_edit.html'
+    fields = ['body']
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
+
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'post_new.html'

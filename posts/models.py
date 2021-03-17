@@ -69,7 +69,7 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         related_name='comments',
     )
-    body = models.CharField(max_length=1000)
+    body = models.TextField(max_length=1000)
     author = models.ForeignKey(
         get_user_model(),
         on_delete=models.PROTECT,
@@ -78,7 +78,7 @@ class Comment(models.Model):
     modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.comment
+        return f'{self.body[:75]}...'
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.post.id)])

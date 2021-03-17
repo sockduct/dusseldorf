@@ -6,7 +6,7 @@
 {% block header %}The Deverloper Nexus - Contact Us{% endblock header %}
 
 {% block content %}
-    <img src="{% static 'img/contactus.jpg' %}">
+    <img src="{% static 'img/contactus.jpg' %}" width="539" height="335">
     <hr>
     {% if not user.is_authenticated %}
         <h3>To submit feedback please <a href="{% url 'account_login' %}?next=/contact/">login</a> or <a href="{% url 'account_signup' %}?next=/contact/">sign up</a></h3>
