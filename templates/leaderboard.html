@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}The Developer Nexus - Leaderboard{% endblock title %}
+{% block header %}The Developer Nexus - Leaderboard{% endblock header %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-2 font-weight-bold">
+            Username
+        </div>
+        <div class="col-1 font-weight-bold">
+            Score
+        </div>
+        <div class="col-2 font-weight-bold">
+            Member Since
+        </div>
+        <div class="col-2 font-weight-bold">
+            Last On
+        </div>
+    </div>
+
+    <hr>
+
+    {% for user in object_list %}
+        <div class="row {% if not user.is_active %}text-muted{% endif %}">
+            <div class="col-2">
+                {{ user.username }}
+                {% if user.nickname %}
+                    ({{ user.nickname }})
+                {% endif %}
+            </div>
+            <div class="col-1">
+                {% if user.posts.count > 0 or user.comment_set.count > 0 %}
+                    {% widthratio user.posts.count 1 10|add:user.comment_set.count %}
+                {% else %}
+                    0
+                {% endif %}
+            </div>
+            <div class="col-2">
+                {{ user.date_joined|naturaltime }}
+            </div>
+            <div class="col-2">
+                {% if user.last_login %}
+                    {{ user.last_login|naturaltime }}
+                {% else %}
+                    Never
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}

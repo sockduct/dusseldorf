@@ -271,7 +271,7 @@ if DEBUG:
 # Secure Deployment settings:
 if not DEBUG:
     # Need to experiment and site/domain compatible with HSTS:
-    # SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_SECONDS = 3600
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True

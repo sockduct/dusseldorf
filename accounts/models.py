@@ -7,6 +7,9 @@ class UserType(models.Model):
     description = models.CharField(max_length=500, blank=True)
 
 class CustomUser(AbstractUser):
+    class Meta:
+        ordering = ['username']
+
     # null=True - allow database field to have a NULL value
     # blank=True - allow form field to have blank value
     # Above two often used together

@@ -1,4 +1,6 @@
-from django.views.generic import TemplateView
+from typing import List
+from django.contrib.auth import get_user_model
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import FormView
 
 from .forms import PagesContactForm
@@ -18,6 +20,10 @@ class ContactPageView(FormView):
 
 class ErrorPageView(TemplateView):
     template_name = 'error.html'
+
+class LeaderboardPageView(ListView):
+    model = get_user_model()
+    template_name = 'leaderboard.html'
 
 class SuccessPageView(TemplateView):
     template_name = 'success.html'
