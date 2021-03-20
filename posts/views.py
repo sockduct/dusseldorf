@@ -27,8 +27,8 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
     template_name = 'comment_delete.html'
 
-    ### Want post_detail, but then need to pass PK and not sure how...
-    success_url = reverse_lazy('post_list')
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'pk': self.object.post_id})
 
     def test_func(self):
         obj = self.get_object()
