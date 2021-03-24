@@ -1,0 +1,14 @@
+# .coveragerc for coverage.py
+#
+# If file not named .coveragerc, sections must be prefaced by coverage:
+# e.g., [coverage:run]
+[run]
+source = .
+branch = True
+omit =
+    .venv/*
+plugins = django_coverage_plugin
+
+[report]
+fail_under = 80
+show_missing = True

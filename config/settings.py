@@ -76,7 +76,6 @@ if DEBUG:
     target_index = INSTALLED_APPS.index('crispy_forms')
     INSTALLED_APPS.insert(target_index, 'debug_toolbar')
 
-
 MIDDLEWARE = [
     # 3rd party debugging:
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -116,6 +115,11 @@ TEMPLATES = [
         },
     },
 ]
+
+# Template debugging for coverage and the django-coverage-plugin:
+if DEBUG:
+    TEMPLATES[0]['OPTIONS']['debug'] = True
+
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
