@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+import uuid
 
 # Create your models here.
 class Tag(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, blank=True)
     # Believe makes more sense in Post model because would add/remove tags
@@ -19,6 +21,7 @@ class Tag(models.Model):
     '''
 
 class PostType(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, blank=True)
 
@@ -31,6 +34,7 @@ class PostType(models.Model):
     '''
 
 class Post(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     # Don't want to allow Null - want all posts to select a type.  That means
     # we must have a default.  For now, just setting to 1 but there may be a
     # better solution:
@@ -64,6 +68,7 @@ class Post(models.Model):
         # When posting, redirect is to this view
 
 class Comment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,

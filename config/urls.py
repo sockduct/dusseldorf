@@ -17,9 +17,15 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
+if settings.ADMIN_SITE_URL_BASE == 'admin':
+    ADMIN_URL = 'admin'
+else:
+    # Use secure/unique admin URL for production:
+    ADMIN_URL = f'as-{settings.ADMIN_SITE_URL_BASE}'
+
 urlpatterns = [
     # Django admin site:
-    path('mtdn/', admin.site.urls),
+    path(f'{ADMIN_URL}/', admin.site.urls),
 
     # User management:
     # path('accounts/', include('django.contrib.auth.urls')),

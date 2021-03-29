@@ -25,6 +25,7 @@ class CommentInline(admin.TabularInline):
 
 class PostAdmin(admin.ModelAdmin):
     model = Post
+    list_display = ('type', 'title', 'author', 'created', 'modified')
     inlines = [CommentInline, ]
 
 admin.site.register(PostType, PostTypeAdmin)

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from re import X
 from environs import Env
 
 
@@ -272,10 +273,21 @@ if DEBUG:
 # If you change this, you must quit all browser instances and then re-launch the site
 
 
+# Generate a random UUID with uuid.uuid4().hex
+ADMIN_SITE_URL_BASE = env.str('DJANGO_ADMIN_URL_BASE', default='admin')
+# One issue is the above isn't secure by default...
+
+
+# Site administrators
+ADMINS = [e.split(':') for e in env.list('DJANGO_ADMINS')]
+
+
 # Secure Deployment settings:
 if not DEBUG:
     # Need to experiment and site/domain compatible with HSTS:
-    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_SECONDS = 2592000  # One month
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True

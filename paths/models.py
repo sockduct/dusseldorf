@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+import uuid
 
 # Create your models here.
 class Area(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
 
@@ -14,6 +16,7 @@ class Area(models.Model):
         return reverse('path_detail', args=[str(self.id)])
 
 class Subject(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
     area = models.ForeignKey(
@@ -27,7 +30,11 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('subject_detail', args=[str(self.id)])
+
 class ResourceType(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500, blank=True)
 
@@ -35,6 +42,7 @@ class ResourceType(models.Model):
         return self.name
 
 class Resource(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
     # Don't want to allow Null - want all posts to select a type.  That means
@@ -57,3 +65,6 @@ class Resource(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('resource_detail', args=[str(self.id)])

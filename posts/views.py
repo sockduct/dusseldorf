@@ -64,6 +64,9 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'post_detail.html'
+    # Optional - choose friendlier name:
+    # context_object_name = 'post'
+    # Note - default context_object_name is 'object'
 
 class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -77,3 +80,6 @@ class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class PostListView(ListView):
     model = Post
     template_name = 'post_list.html'
+    # Optional - choose friendlier name:
+    # context_object_name = 'post_list'
+    # Note - default context_object_name is 'object_list'
