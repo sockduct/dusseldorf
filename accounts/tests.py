@@ -2,30 +2,85 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import resolve, reverse
 
-# Create your tests here.
-class CustomUserTests(TestCase):
-    def test_create_user(self):
-        testuser = 'testuser1'
-        testemail = 'testuser1@localhost'
-        testpass = 'testpass123'
-        User = get_user_model()
+from .models import UserType
 
-        user = User.objects.create_user(username=testuser, email=testemail, password=testpass)
-        self.assertEqual(user.username, testuser)
-        self.assertEqual(user.email, testemail)
+# Create your tests here.
+class UserTypeTests(TestCase):
+    # User type attributes:
+    testname = 'SiteUsers'
+    testdescr = 'General site user - no special privileges'
+
+    def test_create_usertype(self):
+        usertype = UserType.objects.create(name=self.testname, description=self.testdescr)
+
+        self.assertEqual(usertype.name, self.testname)
+        self.assertEqual(usertype.description, self.testdescr)
+
+class CustomUserTests(TestCase):
+    # User attributes:
+    testuser = 'testuser1'
+    testuser_name = 'Test User'
+    testuser_nickname = 'Testy'
+    testuser_email = 'testuser1@localhost'
+    testuser_pass = 'testpass123'
+
+    # Superuser attributes:
+    testadmin = 'testadmin1'
+    testadmin_email = 'testadmin1@localhost'
+    testadmin_pass = 'testpass456'
+
+    def setUp(self):
+        # UserTypes:
+        self.usertype_name = 'SiteUsers'
+        self.usertype_descr = 'General site user - no special privileges'
+        self.usertype = UserType.objects.create(
+            name=self.usertype_name,
+            description=self.usertype_descr
+        )
+
+        self.admintype_name = 'Administrators'
+        self.admintype_descr = 'Site administrators - all privileges'
+        self.admintype = UserType.objects.create(
+            name=self.admintype_name,
+            description=self.admintype_descr
+        )
+
+    def test_create_user(self):
+        User = get_user_model()
+        user = User.objects.create_user(
+            username=self.testuser,
+            email=self.testuser_email,
+            password=self.testuser_pass,
+            name=self.testuser_name,
+            nickname=self.testuser_nickname,
+            type=self.usertype
+        )
+
+        self.assertEqual(user.username, self.testuser)
+        self.assertEqual(user.email, self.testuser_email)
+        self.assertEqual(user.name, self.testuser_name)
+        self.assertEqual(user.nickname, self.testuser_nickname)
+        self.assertEqual(user.type, self.usertype)
+        self.assertEqual(user.type.name, self.usertype_name)
+        self.assertEqual(user.type.description, self.usertype_descr)
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
 
     def test_create_superuser(self):
-        testadmin = 'testadmin1'
-        testemail = 'testadmin1@localhost'
-        testpass = 'testpass456'
         User = get_user_model()
+        user = User.objects.create_superuser(
+            username=self.testadmin,
+            email=self.testadmin_email,
+            password=self.testadmin_pass,
+            type=self.admintype
+        )
 
-        user = User.objects.create_superuser(username=testadmin, email=testemail, password=testpass)
-        self.assertEqual(user.username, testadmin)
-        self.assertEqual(user.email, testemail)
+        self.assertEqual(user.username, self.testadmin)
+        self.assertEqual(user.email, self.testadmin_email)
+        self.assertEqual(user.type, self.admintype)
+        self.assertEqual(user.type.name, self.admintype_name)
+        self.assertEqual(user.type.description, self.admintype_descr)
         self.assertTrue(user.is_active)
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)

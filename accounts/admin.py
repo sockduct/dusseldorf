@@ -1,20 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.admin import ModelAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import UserType
 
 CustomUser = get_user_model()
 
-''' # Don't believe this is how I want to integrate this:
-class UserTypeInline(admin.TabularInline):
-    model = UserType
-    # Default - display 3 extra (empty) rows:
-    extra = 1
-'''
-
 # Register your models here.
+class UserTypeAdmin(ModelAdmin):
+    model = UserType
+
 # Extend UserAdmin class to use our custom user model:
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -31,3 +28,4 @@ class CustomUserAdmin(UserAdmin):
     )
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(UserType, UserTypeAdmin)
