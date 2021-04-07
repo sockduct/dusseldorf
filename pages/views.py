@@ -1,5 +1,6 @@
 from typing import List
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import FormView
 
@@ -15,6 +16,9 @@ class ContactPageView(FormView):
     success_url = '/success/'
 
     def form_valid(self, form):
+        if not self.request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+
         form.send_email(self.request.user.email)
         return super().form_valid(form)
 

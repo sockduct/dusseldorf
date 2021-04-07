@@ -83,6 +83,8 @@ class PostPagesTests(TestCase):
 
         self.post.tags.add(self.tag)
 
+        # This should probably be a separate method
+        # Some of the tests require a logged in user...
         response = self.client.post('/accounts/login/', {
             'login': self.testemail,
             'password': self.testpass

@@ -10,6 +10,8 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     template_name = 'comment_new.html'
     fields = ['body']
+    # Appears to work, but if wanted to be explicit:
+    # login_url = 'account_login' # Django-allauth login, default is 'login'
 
     def form_valid(self, form):
         post_id = self.request.path.split('/')[2]
