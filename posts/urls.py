@@ -6,12 +6,12 @@ from .views import (
 )
 
 urlpatterns = [
-    path('post/comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
-    path('post/comment/<int:pk>/edit/', CommentEditView.as_view(), name='comment_edit'),
-    path('post/<int:pk>/comment/new/', CommentCreateView.as_view(), name='comment_new'),
-    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
-    path('post/<int:pk>/edit/', PostEditView.as_view(), name='post_edit'),
+    path('post/comment/<uuid:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
+    path('post/comment/<uuid:pk>/edit/', CommentEditView.as_view(), name='comment_edit'),
+    path('post/<uuid:pk>/comment/new/', CommentCreateView.as_view(), name='comment_new'),
+    path('post/<uuid:pk>/delete/', PostDeleteView.as_view(), name='post_delete'),
+    path('post/<uuid:pk>/edit/', PostEditView.as_view(), name='post_edit'),
     path('post/new/', PostCreateView.as_view(), name='post_new'),
-    path('post/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
+    path('post/<uuid:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('', PostListView.as_view(), name='post_list'),
 ]

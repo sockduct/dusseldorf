@@ -96,7 +96,10 @@ MIDDLEWARE = [
 
 # Django Debug Toolbar:
 if DEBUG:
-    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+    # Only need to insert earlier in the chain if want to debug middleware
+    # e.g., debug middleware issue or custom middleware
+    # MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
 
 ROOT_URLCONF = 'config.urls'
