@@ -5,18 +5,38 @@
 {% block header %}The Developer Nexus - Path Detail{% endblock header %}
 
 {% block content %}
-    <div class="path-entry">
-        <h2>{{ area.name }}</h2>
-        <hr>
-        <p>{{ area.description }}</p>
-        <hr>
-        <h3>Supporting Subjects</h3>
-        <hr>
-        {% for subject in area.subjects.all %}
-            <p>
-                <a href="{% url 'subject_detail' subject.pk %}">{{ subject.name }}</a> |
-                [{{ subject.resources.count }} supporting resources]</h3>
-            </p>
-        {% endfor %}
+    <div class="card path-entry border-primary">
+        <div class="card-header border-primary">
+            <span class="font-weight-bold">{{ area.name }}</span>
+        </div>
+        <div class="card-body">
+            {{ area.description }}
+        </div>
+        <div class="card-footer text-muted border-primary">
+            {% if area.subjects.count == 0 %}
+                No supporting subjects
+            {% else %}
+                {% if area.subjects.count == 1 %}
+                    <p class="font-weight-bold">Supporting Subject:</p>
+                {% else %}
+                    <p class="font-weight-bold">Supporting Subjects:</p>
+                {% endif %}
+                {% for subject in area.subjects.all %}
+                    <p>
+                        <a href="{{ subject.get_absolute_url }}">{{ subject.name }}</a>
+                        <span class="m-3">&middot;</span>
+                        {% if subject.resources.count == 0 %}
+                            No supporting resources
+                        {% elif subject.resources.count == 1 %}
+                            1 supporting resource
+                        {% else %}
+                            {{ subject.resources.count }} supporting resources
+                        {% endif %}
+                     </p>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
+
+    <br>
 {% endblock content %}

@@ -6,12 +6,31 @@
 
 {% block content %}
     {% for subject in object_list %}
-        <div class="path-entry">
-            <h2><a href="{% url 'subject_detail' subject.pk %}">{{ subject.name }}</a></h2>
-            <p>{{ subject.description }}</p>
-            <h3>[{{ subject.resources.count }} supporting resources]</h3>
-            <br>
-            <br>
+        <div class="card path-entry">
+            <div class="card-header">
+                <!-- Two options:
+                     1) Use tags with url 'subject_detail' subject.pk
+                     2) Use variable subject.get_absolute_url (preferred for linking to individual pages)
+                        Can use #2 because we have defined a get_absolute_url method in the model -->
+                <a href="{{ subject.get_absolute_url }}">
+                    <span class="font-weight-bold">{{ subject.name }}</span>
+                </a>
+            </div>
+            <div class="card-body">
+                {{ subject.description }}
+            </div>
+            <div class="card-footer text-muted">
+                {% if subject.resources.count == 0 %}
+                    No supporting resources
+                {% elif subject.resources.count == 1 %}
+                    1 supporting resource
+                {% else %}
+                    {{ subject.resources.count }} supporting resources
+                {% endif %}
+            </div>
         </div>
-    {% endfor %}
+
+        <br>
+        <br>
+     {% endfor %}
 {% endblock content %}

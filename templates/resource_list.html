@@ -6,15 +6,31 @@
 
 {% block content %}
     {% for resource in object_list %}
-        <div class="path-entry">
-            <h2><a href="{% url 'resource_detail' resource.pk %}">{{ resource.name }}</a></h2>
-            <h3>[Resource type:  {{ resource.type }}]</h3>
-            <p>{{ resource.description }}</p>
+        <div class="card path-entry">
+            <div class="card-header">
+                <!-- Two options:
+                     1) Use tags with url 'resource_detail' subject.pk
+                     2) Use variable resource.get_absolute_url (preferred for linking to individual pages)
+                        Can use #2 because we have defined a get_absolute_url method in the model -->
+                <a href="{{ resource.get_absolute_url }}">
+                    <span class="font-weight-bold">{{ resource.name }}</span>
+                    <span class="m-3">&middot;</span>
+                    <span class="text-muted">Type {{ resource.type }}</span>
+                </a>
+            </div>
+            <div class="card-body">
+                {{ resource.description }}
+            </div>
             {% if resource.url %}
-                <h3><a href="{{ resource.url }}">Additional Resource Information</a> (External Site)</h3>
+                <div class="card-footer text-muted">
+                    <a href="{{ resource.url }}">Additional resource information</a> (External Site)
+                </div>
+            {% else %}
+                No additional resource information
             {% endif %}
-            <br>
-            <br>
         </div>
-    {% endfor %}
+
+        <br>
+        <br>
+     {% endfor %}
 {% endblock content %}

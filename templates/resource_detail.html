@@ -5,13 +5,21 @@
 {% block header %}The Developer Nexus - Resource Detail{% endblock header %}
 
 {% block content %}
-    <div class="path-entry">
-        <h2>{{ resource.name }} [{{ resource.type }}]</h2>
-        <hr>
-        <p>{{ resource.description }}</p>
-        <hr>
+    <div class="card path-entry border-primary">
+        <div class="card-header border-primary">
+            <span class="font-weight-bold">{{ resource.name }}</span>
+            <span class="m-3">&middot;</span>
+            <span class="text-muted">Type {{ resource.type }}</span>
+        </div>
+        <div class="card-body">
+            {{ resource.description }}
+        </div>
         {% if resource.url %}
-            <h3><a href="{{ resource.url }}">Additional Resource Information</a> (External Site)</h3>
+            <div class="card-footer text-muted border-primary">
+                <a href="{{ resource.url }}">Additional resource information</a> (External Site)
+            </div>
         {% endif %}
     </div>
+
+    <br>
 {% endblock content %}

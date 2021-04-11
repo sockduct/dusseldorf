@@ -5,20 +5,34 @@
 {% block header %}The Developer Nexus - Subject Detail{% endblock header %}
 
 {% block content %}
-    <div class="path-entry">
-        <h2>{{ subject.name }}</h2>
-        <hr>
-        <p>{{ subject.description }}</p>
-        <hr>
-        <h3>Supporting Resources</h3>
-        <hr>
-        {% for resource in subject.resources.all %}
-            <p>
-                <a href="{% url 'resource_detail' resource.pk %}">{{ resource.name }}</a>
-                {% if resource.url %}
-                    [Includes external link]
+    <div class="card path-entry border-primary">
+        <div class="card-header border-primary">
+            <span class="font-weight-bold">{{ subject.name }}</span>
+        </div>
+        <div class="card-body">
+            {{ subject.description }}
+        </div>
+        <div class="card-footer text-muted border-primary">
+            {% if subject.resources.count == 0 %}
+                No supporting resources
+            {% else %}
+                {% if subject.resources.count == 1 %}
+                    <p class="font-weight-bold">Supporting Resource:</p>
+                {% else %}
+                    <p class="font-weight-bold">Supporting Resources:</p>
                 {% endif %}
-            </p>
-        {% endfor %}
+                {% for resource in subject.resources.all %}
+                    <p>
+                        <a href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
+                        {% if resource.url %}
+                            <span class="m-3">&middot;</span>
+                            <span class="text-muted">Includes external link</span>
+                        {% endif %}
+                    </p>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
+
+    <br>
 {% endblock content %}

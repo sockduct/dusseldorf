@@ -6,12 +6,31 @@
 
 {% block content %}
     {% for area in object_list %}
-        <div class="path-entry">
-            <h2><a href="{% url 'path_detail' area.pk %}">{{ area.name }}</a></h2>
-            <p>{{ area.description }}</p>
-            <h3>[{{ area.subjects.count }} supporting subjects]</h3>
-            <br>
-            <br>
+        <div class="card path-entry">
+            <div class="card-header">
+                <!-- Two options:
+                     1) Use tags with url 'path_detail' area.pk
+                     2) Use variable area.get_absolute_url (preferred for linking to individual pages)
+                        Can use #2 because we have defined a get_absolute_url method in the model -->
+                <a href="{{ area.get_absolute_url }}">
+                    <span class="font-weight-bold">{{ area.name }}</span>
+                </a>
+            </div>
+            <div class="card-body">
+                {{ area.description }}
+            </div>
+            <div class="card-footer text-muted">
+                {% if area.subjects.count == 0 %}
+                    No supporting subjects
+                {% elif area.subjects.count == 1 %}
+                    1 supporting subject
+                {% else %}
+                    {{ area.subjects.count }} supporting subjects
+                {% endif %}
+            </div>
         </div>
-    {% endfor %}
+
+        <br>
+        <br>
+     {% endfor %}
 {% endblock content %}

@@ -5,8 +5,11 @@ import uuid
 
 # Create your models here.
 class Area(models.Model):
+    class Meta:
+        ordering = ['name']
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=500)
 
     def __str__(self):
@@ -16,8 +19,11 @@ class Area(models.Model):
         return reverse('path_detail', args=[str(self.id)])
 
 class Subject(models.Model):
+    class Meta:
+        ordering = ['name']
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=500)
     area = models.ForeignKey(
         Area,
@@ -34,16 +40,22 @@ class Subject(models.Model):
         return reverse('subject_detail', args=[str(self.id)])
 
 class ResourceType(models.Model):
+    class Meta:
+        ordering = ['name']
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
         return self.name
 
 class Resource(models.Model):
+    class Meta:
+        ordering = ['name']
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=500)
     # Don't want to allow Null - want all posts to select a type.  That means
     # we must have a default.  For now, just setting to 1 but there may be a
