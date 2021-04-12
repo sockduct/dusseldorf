@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     # Used by WhiteNoise to manage static files:
     'whitenoise.runserver_nostatic',
+    # Note that it's installed before Django staticfiles:
     'django.contrib.staticfiles',
     # Used by Django-AllAuth:
     'django.contrib.sites',
@@ -72,10 +73,11 @@ INSTALLED_APPS = [
     'pages',
 ]
 
-# Django Debug Toolbar:
+# Django Debug Toolbar and Django Extensions:
 if DEBUG:
     target_index = INSTALLED_APPS.index('crispy_forms')
     INSTALLED_APPS.insert(target_index, 'debug_toolbar')
+    INSTALLED_APPS.insert(target_index + 1, 'django_extensions')
 
 MIDDLEWARE = [
     # 3rd party debugging:
@@ -84,9 +86,9 @@ MIDDLEWARE = [
 
     # Default:
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    # Used by Whitenoise:
+    # Used by Whitenoise - add after SecurityMiddleware:
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -294,3 +296,6 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
+# May need for Heroku:
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

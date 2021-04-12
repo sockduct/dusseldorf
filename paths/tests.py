@@ -329,10 +329,172 @@ class SubjectListTests(TestCase):
     def test_subjectlist_does_not_contain_incorrect_html(self):
         self.assertNotContains(self.response, 'Hi there! I should not be on the page.')
 
-    def test_subjectlist_url_resolves_arealistview(self):
+    def test_subjectlist_url_resolves_subjectlistview(self):
         view = resolve('/paths/subjects/')
         self.assertEqual(view.func.__name__, SubjectListView.as_view().__name__)
 
+class SubjectDetailTests(TestCase):
+    def setUp(self):
+        # First setup database with models:
+        self.testsubjectname1 = "Test Subject 1"
+        self.testsubjectdescr1 = "Test Subject 1 Description"
+        self.subject1 = Subject.objects.create(
+            name=self.testsubjectname1,
+            description=self.testsubjectdescr1,
+        )
+
+        self.testsubjectname2 = "Test Subject 2"
+        self.testsubjectdescr2 = "Test Subject 2 Description"
+        self.subject2 = Subject.objects.create(
+            name=self.testsubjectname2,
+            description=self.testsubjectdescr2,
+        )
+
+        self.testsubjectname3 = "Test Subject 3"
+        self.testsubjectdescr3 = "Test Subject 3 Description"
+        self.subject3 = Subject.objects.create(
+            name=self.testsubjectname3,
+            description=self.testsubjectdescr3,
+        )
+
+        self.testresource_typename = "Test Resource Type"
+        self.testresource_typedescr = "Test Resource Type Description"
+        self.resource_type = ResourceType.objects.create(
+            name=self.testresource_typename,
+            description=self.testresource_typedescr
+        )
+
+        self.testresourcename1 = "Test Resource 1"
+        self.testresourcedescr1 = "Test Resource Description 1"
+        self.testresourceurl1 = "https://www.example.com/resource1"
+        self.resource = Resource.objects.create(
+            name=self.testresourcename1,
+            description=self.testresourcedescr1,
+            subject=self.subject1,
+            type=self.resource_type,
+            url=self.testresourceurl1
+        )
+
+        self.testresourcename2 = "Test Resource 2"
+        self.testresourcedescr2 = "Test Resource Description 2"
+        self.testresourceurl2 = "https://www.example.com/resource2"
+        self.resource = Resource.objects.create(
+            name=self.testresourcename2,
+            description=self.testresourcedescr2,
+            subject=self.subject1,
+            type=self.resource_type,
+            url=self.testresourceurl2
+        )
+
+        self.testresourcename3 = "Test Resource 3"
+        self.testresourcedescr3 = "Test Resource Description 3"
+        self.resource = Resource.objects.create(
+            name=self.testresourcename3,
+            description=self.testresourcedescr3,
+            subject=self.subject2,
+            type=self.resource_type
+        )
+
+        # Then retrieve pages:
+        url1 = reverse('subject_detail', args=[str(self.subject1.id)])
+        self.response1 = self.client.get(url1)
+        url2 = reverse('subject_detail', args=[str(self.subject2.id)])
+        self.response2 = self.client.get(url2)
+        url3 = reverse('subject_detail', args=[str(self.subject3.id)])
+        self.response3 = self.client.get(url3)
+
+    def test_subjectdetail_status_code(self):
+        self.assertEqual(self.response1.status_code, 200)
+
+    def test_subjectdetail_template(self):
+        self.assertTemplateUsed(self.response1, 'subject_detail.html')
+
+    def test_subject1detail_contains_html(self):
+        self.assertContains(self.response1, 'The Developer Nexus - Subject Detail')
+        self.assertContains(self.response1, self.testsubjectname1)
+        self.assertContains(self.response1, self.testsubjectdescr1)
+        self.assertContains(self.response1, 'Supporting Resources')
+        self.assertContains(self.response1, self.testresourcename1)
+        self.assertContains(self.response1, 'Includes external link')
+        self.assertContains(self.response1, self.testresourcename2)
+
+    def test_subject2detail_contains_html(self):
+        self.assertContains(self.response2, 'The Developer Nexus - Subject Detail')
+        self.assertContains(self.response2, self.testsubjectname2)
+        self.assertContains(self.response2, self.testsubjectdescr2)
+        self.assertContains(self.response2, 'Supporting Resource')
+        self.assertContains(self.response2, self.testresourcename3)
+        self.assertNotContains(self.response2, 'Includes external link')
+
+    def test_subject3detail_contains_html(self):
+        self.assertContains(self.response3, 'The Developer Nexus - Subject Detail')
+        self.assertContains(self.response3, self.testsubjectname3)
+        self.assertContains(self.response3, self.testsubjectdescr3)
+        self.assertContains(self.response3, 'No supporting resources')
+
+    def test_subjectdetail_does_not_contain_incorrect_html(self):
+        self.assertNotContains(self.response1, 'Hi there! I should not be on the page.')
+
+    def test_subjectdetail_url_resolves_subjectdetailview(self):
+        view = resolve(f'/paths/subject/{self.subject1.id}/')
+        self.assertEqual(view.func.__name__, SubjectDetailView.as_view().__name__)
+
+class ResourceListTests(TestCase):
+    def setUp(self):
+        # First setup database with models:
+        self.testresource_typename = "Test Resource Type"
+        self.testresource_typedescr = "Test Resource Type Description"
+        self.resource_type = ResourceType.objects.create(
+            name=self.testresource_typename,
+            description=self.testresource_typedescr
+        )
+
+        self.testresourcename1 = "Test Resource 1"
+        self.testresourcedescr1 = "Test Resource Description 1"
+        self.testresourceurl1 = "https://www.example.com/resource1"
+        self.resource = Resource.objects.create(
+            name=self.testresourcename1,
+            description=self.testresourcedescr1,
+            type=self.resource_type,
+            url=self.testresourceurl1
+        )
+
+        self.testresourcename2 = "Test Resource 2"
+        self.testresourcedescr2 = "Test Resource Description 2"
+        self.resource = Resource.objects.create(
+            name=self.testresourcename2,
+            description=self.testresourcedescr2,
+            type=self.resource_type
+        )
+
+        # Then retrieve pages:
+        url = reverse('resource_list')
+        self.response = self.client.get(url)
+
+    def test_resourcelist_status_code(self):
+        self.assertEqual(self.response.status_code, 200)
+
+    def test_resourcelist_template(self):
+        self.assertTemplateUsed(self.response, 'resource_list.html')
+
+    def test_resourcelist_contains_html(self):
+        self.assertContains(self.response, 'The Developer Nexus - Resources')
+        self.assertContains(self.response, self.testresourcename1)
+        self.assertContains(self.response, f'Type {self.testresource_typename}')
+        self.assertContains(self.response, self.testresourcedescr1)
+        self.assertContains(self.response, 'Additional resource information</a> (External Site)')
+        self.assertContains(self.response, self.testresourcename2)
+        self.assertContains(self.response, self.testresourcedescr2)
+        self.assertContains(self.response, 'No additional resource information')
+
+    def test_resourcelist_does_not_contain_incorrect_html(self):
+        self.assertNotContains(self.response, 'Hi there! I should not be on the page.')
+
+    def test_resourcelist_url_resolves_resourcelistview(self):
+        view = resolve('/paths/resources/')
+        self.assertEqual(view.func.__name__, ResourceListView.as_view().__name__)
+
+# class ResourceDetailTests(TestCase):
 '''
 class PathTests(TestCase):
     def setUp(self):
