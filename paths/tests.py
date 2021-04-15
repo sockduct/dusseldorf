@@ -1,3 +1,5 @@
+import uuid
+
 from django.test import TestCase
 from django.urls import resolve, reverse
 
@@ -82,6 +84,10 @@ class AreaListTests(TestCase):
         url = reverse('path_list')
         self.response = self.client.get(url)
 
+    def test_area_str(self):
+        area = Area(name='Example Area')
+        self.assertEqual(str(area), area.name)
+
     def test_arealist_status_code(self):
         self.assertEqual(self.response.status_code, 200)
 
@@ -165,7 +171,7 @@ class AreaDetailTests(TestCase):
         self.testresourcename1 = "Test Resource 1"
         self.testresourcedescr1 = "Test Resource Description 1"
         self.testresourceurl1 = "https://www.example.com/resource1"
-        self.resource = Resource.objects.create(
+        self.resource1 = Resource.objects.create(
             name=self.testresourcename1,
             description=self.testresourcedescr1,
             subject=self.subject1,
@@ -176,7 +182,7 @@ class AreaDetailTests(TestCase):
         self.testresourcename2 = "Test Resource 2"
         self.testresourcedescr2 = "Test Resource Description 2"
         self.testresourceurl2 = "https://www.example.com/resource2"
-        self.resource = Resource.objects.create(
+        self.resource2 = Resource.objects.create(
             name=self.testresourcename2,
             description=self.testresourcedescr2,
             subject=self.subject1,
@@ -187,7 +193,7 @@ class AreaDetailTests(TestCase):
         self.testresourcename3 = "Test Resource 3"
         self.testresourcedescr3 = "Test Resource Description 3"
         self.testresourceurl3 = "https://www.example.com/resource3"
-        self.resource = Resource.objects.create(
+        self.resource3 = Resource.objects.create(
             name=self.testresourcename3,
             description=self.testresourcedescr3,
             subject=self.subject2,
@@ -202,9 +208,18 @@ class AreaDetailTests(TestCase):
         self.response2 = self.client.get(url2)
         url3 = reverse('path_detail', args=[str(self.area3.id)])
         self.response3 = self.client.get(url3)
+        url4 = reverse('path_detail', args=[str(uuid.uuid4())])
+        self.response4 = self.client.get(url4)
+        self.response5 = self.client.get('/paths/area/1/')
 
-    def test_areadetail_status_code(self):
+    def test_areadetail_status_code1(self):
         self.assertEqual(self.response1.status_code, 200)
+
+    def test_areadetail_status_code2(self):
+        self.assertEqual(self.response4.status_code, 404)
+
+    def test_areadetail_status_code3(self):
+        self.assertEqual(self.response5.status_code, 404)
 
     def test_areadetail_template(self):
         self.assertTemplateUsed(self.response1, 'path_detail.html')
@@ -274,7 +289,7 @@ class SubjectListTests(TestCase):
         self.testresourcename1 = "Test Resource 1"
         self.testresourcedescr1 = "Test Resource Description 1"
         self.testresourceurl1 = "https://www.example.com/resource1"
-        self.resource = Resource.objects.create(
+        self.resource1 = Resource.objects.create(
             name=self.testresourcename1,
             description=self.testresourcedescr1,
             subject=self.subject1,
@@ -285,7 +300,7 @@ class SubjectListTests(TestCase):
         self.testresourcename2 = "Test Resource 2"
         self.testresourcedescr2 = "Test Resource Description 2"
         self.testresourceurl2 = "https://www.example.com/resource2"
-        self.resource = Resource.objects.create(
+        self.resource2 = Resource.objects.create(
             name=self.testresourcename2,
             description=self.testresourcedescr2,
             subject=self.subject1,
@@ -296,7 +311,7 @@ class SubjectListTests(TestCase):
         self.testresourcename3 = "Test Resource 3"
         self.testresourcedescr3 = "Test Resource Description 3"
         self.testresourceurl3 = "https://www.example.com/resource3"
-        self.resource = Resource.objects.create(
+        self.resource3 = Resource.objects.create(
             name=self.testresourcename3,
             description=self.testresourcedescr3,
             subject=self.subject2,
@@ -307,6 +322,10 @@ class SubjectListTests(TestCase):
         # Then retrieve pages:
         url = reverse('subject_list')
         self.response = self.client.get(url)
+
+    def test_subject_str(self):
+        subject = Subject(name='Example Subject')
+        self.assertEqual(str(subject), subject.name)
 
     def test_subjectlist_status_code(self):
         self.assertEqual(self.response.status_code, 200)
@@ -367,7 +386,7 @@ class SubjectDetailTests(TestCase):
         self.testresourcename1 = "Test Resource 1"
         self.testresourcedescr1 = "Test Resource Description 1"
         self.testresourceurl1 = "https://www.example.com/resource1"
-        self.resource = Resource.objects.create(
+        self.resource1 = Resource.objects.create(
             name=self.testresourcename1,
             description=self.testresourcedescr1,
             subject=self.subject1,
@@ -378,7 +397,7 @@ class SubjectDetailTests(TestCase):
         self.testresourcename2 = "Test Resource 2"
         self.testresourcedescr2 = "Test Resource Description 2"
         self.testresourceurl2 = "https://www.example.com/resource2"
-        self.resource = Resource.objects.create(
+        self.resource2 = Resource.objects.create(
             name=self.testresourcename2,
             description=self.testresourcedescr2,
             subject=self.subject1,
@@ -388,7 +407,7 @@ class SubjectDetailTests(TestCase):
 
         self.testresourcename3 = "Test Resource 3"
         self.testresourcedescr3 = "Test Resource Description 3"
-        self.resource = Resource.objects.create(
+        self.resource3 = Resource.objects.create(
             name=self.testresourcename3,
             description=self.testresourcedescr3,
             subject=self.subject2,
@@ -402,9 +421,18 @@ class SubjectDetailTests(TestCase):
         self.response2 = self.client.get(url2)
         url3 = reverse('subject_detail', args=[str(self.subject3.id)])
         self.response3 = self.client.get(url3)
+        url4 = reverse('subject_detail', args=[str(uuid.uuid4())])
+        self.response4 = self.client.get(url4)
+        self.response5 = self.client.get('/paths/subject/1/')
 
-    def test_subjectdetail_status_code(self):
+    def test_subjectdetail_status_code1(self):
         self.assertEqual(self.response1.status_code, 200)
+
+    def test_subjectdetail_status_code2(self):
+        self.assertEqual(self.response4.status_code, 404)
+
+    def test_subjectdetail_status_code3(self):
+        self.assertEqual(self.response5.status_code, 404)
 
     def test_subjectdetail_template(self):
         self.assertTemplateUsed(self.response1, 'subject_detail.html')
@@ -452,7 +480,7 @@ class ResourceListTests(TestCase):
         self.testresourcename1 = "Test Resource 1"
         self.testresourcedescr1 = "Test Resource Description 1"
         self.testresourceurl1 = "https://www.example.com/resource1"
-        self.resource = Resource.objects.create(
+        self.resource1 = Resource.objects.create(
             name=self.testresourcename1,
             description=self.testresourcedescr1,
             type=self.resource_type,
@@ -461,7 +489,7 @@ class ResourceListTests(TestCase):
 
         self.testresourcename2 = "Test Resource 2"
         self.testresourcedescr2 = "Test Resource Description 2"
-        self.resource = Resource.objects.create(
+        self.resource2 = Resource.objects.create(
             name=self.testresourcename2,
             description=self.testresourcedescr2,
             type=self.resource_type
@@ -470,6 +498,10 @@ class ResourceListTests(TestCase):
         # Then retrieve pages:
         url = reverse('resource_list')
         self.response = self.client.get(url)
+
+    def test_resource_str(self):
+        resource = Resource(name='Example Resource')
+        self.assertEqual(str(resource), resource.name)
 
     def test_resourcelist_status_code(self):
         self.assertEqual(self.response.status_code, 200)
@@ -494,82 +526,73 @@ class ResourceListTests(TestCase):
         view = resolve('/paths/resources/')
         self.assertEqual(view.func.__name__, ResourceListView.as_view().__name__)
 
-# class ResourceDetailTests(TestCase):
-'''
-class PathTests(TestCase):
+class ResourceDetailTests(TestCase):
     def setUp(self):
-        self.testarea = 'Software Development Fundamentals'
-        self.testsubject = 'Programming'
-        self.testresource = 'Introduction to Programming'
-        self.testtype = 'Book'
-        self.testurl = 'http://www.example.com/introtoprogramming'
-
-        self.area = Area.objects.create(name=self.testarea)
-        self.subject = Subject.objects.create(name=self.testsubject, area=self.area)
-        self.restype = ResourceType.objects.create(name=self.testtype)
-        self.resource = Resource.objects.create(
-            name=self.testresource,
-            subject=self.subject,
-            type=self.restype,
-            url=self.testurl
+        # First setup database with models:
+        self.testresource_typename = "Test Resource Type"
+        self.testresource_typedescr = "Test Resource Type Description"
+        self.resource_type = ResourceType.objects.create(
+            name=self.testresource_typename,
+            description=self.testresource_typedescr
         )
 
-    def test_string_representation(self):
-        path = Area(name='Example Area')
-        self.assertEqual(str(path), path.name)
+        self.testresourcename1 = "Test Resource 1"
+        self.testresourcedescr1 = "Test Resource Description 1"
+        self.testresourceurl1 = "https://www.example.com/resource1"
+        self.resource1 = Resource.objects.create(
+            name=self.testresourcename1,
+            description=self.testresourcedescr1,
+            type=self.resource_type,
+            url=self.testresourceurl1
+        )
 
-    def test_path_content(self):
-        self.assertEqual(f'{self.resource.url}', self.testurl)
-        self.assertEqual(f'{self.resource.type}', self.testtype)
-        self.assertEqual(f'{self.resource.subject}', self.testsubject)
-        self.assertEqual(f'{self.resource.name}', self.testresource)
+        self.testresourcename2 = "Test Resource 2"
+        self.testresourcedescr2 = "Test Resource Description 2"
+        self.resource2 = Resource.objects.create(
+            name=self.testresourcename2,
+            description=self.testresourcedescr2,
+            type=self.resource_type
+        )
 
-        self.assertEqual(f'{self.restype.name}', self.testtype)
-        self.assertEqual(f'{self.subject.name}', self.testsubject)
-        self.assertEqual(f'{self.area.name}', self.testarea)
+        # Then retrieve pages:
+        url1 = reverse('resource_detail', args=[str(self.resource1.id)])
+        self.response1 = self.client.get(url1)
+        url2 = reverse('resource_detail', args=[str(self.resource2.id)])
+        self.response2 = self.client.get(url2)
+        url3 = reverse('subject_detail', args=[str(uuid.uuid4())])
+        self.response3 = self.client.get(url3)
+        self.response4 = self.client.get('/paths/subject/1/')
 
-    def test_path_list_view(self):
-        response = self.client.get(reverse('path_list'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.testarea)
-        self.assertContains(response, '1 supporting subjects')
-        self.assertTemplateUsed(response, 'path_list.html')
+    def test_resourcedetail_status_code1(self):
+        self.assertEqual(self.response1.status_code, 200)
 
-    def test_path_detail_view(self):
-        response = self.client.get('/paths/area/1/')
-        no_response = self.client.get('/paths/area/1000000/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(no_response.status_code, 404)
-        self.assertContains(response, self.testarea)
-        self.assertTemplateUsed(response, 'path_detail.html')
+    def test_resourcedetail_status_code2(self):
+        self.assertEqual(self.response3.status_code, 404)
 
-    def test_subject_list_view(self):
-        response = self.client.get(reverse('subject_list'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.testsubject)
-        self.assertContains(response, '1 supporting resources')
-        self.assertTemplateUsed(response, 'subject_list.html')
+    def test_resourcedetail_status_code3(self):
+        self.assertEqual(self.response4.status_code, 404)
 
-    def test_subject_detail_view(self):
-        response = self.client.get('/paths/subject/1/')
-        no_response = self.client.get('/paths/subject/1000000/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(no_response.status_code, 404)
-        self.assertContains(response, self.testsubject)
-        self.assertTemplateUsed(response, 'subject_detail.html')
+    def test_resourcedetail_template(self):
+        self.assertTemplateUsed(self.response1, 'resource_detail.html')
 
-    def test_resource_list_view(self):
-        response = self.client.get(reverse('resource_list'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.testresource)
-        self.assertContains(response, 'Additional Resource Information')
-        self.assertTemplateUsed(response, 'resource_list.html')
+    def test_resource1detail_contains_html(self):
+        self.assertContains(self.response1, 'The Developer Nexus - Resource Detail')
+        self.assertContains(self.response1, self.testresourcename1)
+        self.assertContains(self.response1, f'Type {self.testresource_typename}')
+        self.assertContains(self.response1, self.testresourcedescr1)
+        self.assertContains(self.response1, f'<a href="{self.testresourceurl1}">Additional '
+                                             'resource information</a> (External Site)')
 
-    def test_resource_detail_view(self):
-        response = self.client.get('/paths/resource/1/')
-        no_response = self.client.get('/paths/resource/1000000/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(no_response.status_code, 404)
-        self.assertContains(response, self.testresource)
-        self.assertTemplateUsed(response, 'resource_detail.html')
-'''
+    def test_resource2detail_contains_html(self):
+        self.assertContains(self.response2, 'The Developer Nexus - Resource Detail')
+        self.assertContains(self.response2, self.testresourcename2)
+        self.assertContains(self.response2, f'Type {self.testresource_typename}')
+        self.assertContains(self.response2, self.testresourcedescr2)
+        self.assertNotContains(self.response2, 'Additional resource information')
+
+    def test_resourcedetail_does_not_contain_incorrect_html(self):
+        self.assertNotContains(self.response1, 'Hi there! I should not be on the page.')
+
+    def test_resourcedetail_url_resolves_resourcedetailview(self):
+        view = resolve(f'/paths/resource/{self.resource1.id}/')
+        self.assertEqual(view.func.__name__, ResourceDetailView.as_view().__name__)
