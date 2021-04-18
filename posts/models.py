@@ -36,13 +36,12 @@ class PostType(models.Model):
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     # Don't want to allow Null - want all posts to select a type.  That means
-    # we must have a default.  For now, just setting to 1 but there may be a
-    # better solution:
+    # we must have a default.  For now, setting to first type.
     type = models.ForeignKey(
         PostType,
         on_delete=models.PROTECT,
         related_name='posts',
-        default=1
+        default=PostType.objects.first()
     )
     title = models.CharField(max_length=100)
     body = models.TextField()
