@@ -34,6 +34,11 @@ class PostType(models.Model):
     '''
 
 class Post(models.Model):
+    # Would prefer for this to be after class level variables, but must be
+    # defined before referenced by type:
+    def type_default():
+        return PostType.objects.first()
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     # Don't want to allow Null - want all posts to select a type.  That means
     # we must have a default.  For now, setting to first type.
@@ -41,7 +46,7 @@ class Post(models.Model):
         PostType,
         on_delete=models.PROTECT,
         related_name='posts',
-        default=PostType.objects.first()
+        default=type_default
     )
     title = models.CharField(max_length=100)
     body = models.TextField()
