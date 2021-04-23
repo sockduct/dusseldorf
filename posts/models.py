@@ -48,6 +48,8 @@ class Post(models.Model):
         related_name='posts',
         default=type_default
     )
+    # Note:  Changed default above to use method because of Django serialization
+    #        error
     title = models.CharField(max_length=100)
     body = models.TextField()
     author = models.ForeignKey(
