@@ -26,18 +26,18 @@ Perform a full lifecycle development of a software system, including requirement
 
 **Package** | **Version**
 ------------|------------
-cryptography | 3.4.6
+cryptography | 3.4.7
 dj-database-url | 0.5.0
 dj-email-url | 1.0.2
-Django | 3.1.7
+Django | 3.1.8
 django-allauth | 0.44.0
 django-cache-url | 3.2.3
 django-coverage-plugin | 1.8.0
-django-crispy-forms | 1.11.1
-django-debug-toolbar | 3.2
-django-extensions | 3.1.2
-environs | 9.3.1
-gunicorn | 20.0.4
+django-crispy-forms | 1.11.2
+django-debug-toolbar | 3.2.1
+django-extensions | 3.1.3
+environs | 9.3.2
+gunicorn | 20.1.0
 pipdeptree | 2.0.0
 psycopg2-binary | 2.8.6
 ptpython | 3.0.17

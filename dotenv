@@ -35,4 +35,4 @@ export DJANGO_EMAIL_USE_TLS=True
 export DJANGO_ADMIN_URL_BASE=<generated-hex-id-from-above>
 #
 # Name1:E-mail1,Name2:E-mail2,...
-export DJANGO_ADMINS=
+export DJANGO_ADMINS=Administrator:admin@example.com
