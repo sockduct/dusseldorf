@@ -146,7 +146,7 @@ Note:  A Django project consists of a collection of applications and supporting 
 
 ![Application Home Page](docs/DeveloperNexus-Home.png)
 
-Note:  See also [Site Overview]() in the Project Documents section
+Note:  See also [Site Overview](docs/Final%20Application%20Walk%20Through.mp4) in the Project Documents section
 
 <br>
 
