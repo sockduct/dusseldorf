@@ -5,7 +5,7 @@ You're receiving this e-mail because the user {{ user_display }} has given this 
 To confirm this is correct, please go to:
 {{ activate_url }}
 
-If you've received this in error, no further action is necessary.  Just delete this mesaage.
+If you've received this in error, no further action is necessary.  Just delete this message.
 {% endblocktrans %}{% endautoescape %}
 {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you from {{ site_name }}!
 [{{ site_domain }}]{% endblocktrans %}
