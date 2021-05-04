@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
@@ -39,6 +40,10 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('', include('posts.urls')),
 ]
+
+# User uploaded content:
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Above serves locally - change if use external object store
 
 if settings.DEBUG:
     import debug_toolbar

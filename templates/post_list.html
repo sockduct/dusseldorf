@@ -31,6 +31,9 @@
                 <span class="text-muted">{{ post.type }} by {{ post.author }} - {{ post.created|naturaltime }}</span>
             </div>
             <div class="card-body">
+                {% if post.image %}
+                    <img class="img-fluid rounded mx-auto d-block mb-3" src={{ post.image.url }} alt="User Supplied Image">
+                {% endif %}
                 {{ post.body }}
             </div>
             {% if post.tags.all.count >= 1  or post.comments.all.count >= 1 %}

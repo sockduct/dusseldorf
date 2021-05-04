@@ -57,6 +57,10 @@ class Post(models.Model):
         on_delete=models.PROTECT,
         related_name='posts'
     )
+    # Note:  To allow file uploads use FileField (be mindful of security)
+    image = models.ImageField(upload_to='img/', blank=True)
+
+    # Date-Time stamps:
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     viewed = models.DateTimeField(null=True, blank=True)
