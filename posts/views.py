@@ -34,7 +34,7 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         obj = self.get_object()
-        return obj.author == self.request.user
+        return self.request.user.is_staff or self.request.user == obj.author
 
 class CommentEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
@@ -43,7 +43,7 @@ class CommentEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         obj = self.get_object()
-        return obj.author == self.request.user
+        return self.request.user.is_staff or self.request.user == obj.author
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -61,7 +61,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         obj = self.get_object()
-        return obj.author == self.request.user
+        return self.request.user.is_staff or self.request.user == obj.author
 
 class PostDetailView(DetailView):
     model = Post
@@ -77,7 +77,7 @@ class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         obj = self.get_object()
-        return obj.author == self.request.user
+        return self.request.user.is_staff or self.request.user == obj.author
 
 class PostListView(ListView):
     model = Post

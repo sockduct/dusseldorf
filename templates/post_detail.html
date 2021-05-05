@@ -12,7 +12,7 @@
             <li class="nav-item">
                 <a class="text-success" href="{% url 'post_new' %}">➕ Add Post</a>
             </li>
-            {% if user.is_authenticated and user.username == post.author.username %}
+            {% if user.is_authenticated and user.is_staff or user.username == post.author.username %}
                 <li class="nav-item">
                     <a class="ml-4 text-warning" href="{% url 'post_edit' post.pk %}">🖉 Edit Post</a>
                 </li>
@@ -68,7 +68,7 @@
                         <div class="card-body">
                             {{ comment.body }}
                         </div>
-                        {% if user.is_authenticated and user.username == comment.author.username %}
+                        {% if user.is_authenticated and user.is_staff or user.username == comment.author.username %}
                             <div class="card-footer text-muted">
                                 <a class="d-inline text-warning" href="{% url 'comment_edit' comment.pk %}">🖉 Edit Comment</a>
                                 <a class="d-inline ml-4 text-danger" href="{% url 'comment_delete' comment.pk %}">❌ Delete Comment</a>
