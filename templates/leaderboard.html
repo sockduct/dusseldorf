@@ -13,10 +13,10 @@
         <div class="col-1 font-weight-bold">
             Score
         </div>
-        <div class="col-2 font-weight-bold">
+        <div class="col-3 font-weight-bold">
             Member Since
         </div>
-        <div class="col-2 font-weight-bold">
+        <div class="col-3 font-weight-bold">
             Last On
         </div>
     </div>
@@ -33,16 +33,17 @@
                     {% endif %}
                 </div>
                 <div class="col-1">
-                    {% if user.posts.count > 0 or user.comment_set.count > 0 %}
-                        {% widthratio user.posts.count 1 10|add:user.comment_set.count %}
-                    {% else %}
-                        0
-                    {% endif %}
+                    {# if user.posts.count > 0 or user.comment_set.count > 0 #}
+                        {# widthratio user.posts.count 1 10|add:user.comment_set.count #}
+                    {# else #}
+                        <!-- 0 -->
+                    {# endif #}
+                    {{ user.total }}
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     {{ user.date_joined|naturaltime }}
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     {% if user.last_login %}
                         {{ user.last_login|naturaltime }}
                     {% else %}
