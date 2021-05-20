@@ -31,7 +31,7 @@ Perform full lifecycle development of a software system, including requirements 
 cryptography | 3.4.7
 dj-database-url | 0.5.0
 dj-email-url | 1.0.2
-django | 3.1.8
+django | 3.2.3
 django-allauth | 0.44.0
 django-cache-url | 3.2.3
 django-coverage-plugin | 1.8.0
@@ -43,7 +43,7 @@ gunicorn | 20.1.0
 pipdeptree | 2.0.0
 psycopg2-binary | 2.8.6
 ptpython | 3.0.17
-werkzeug | 1.0.1
+werkzeug | 2.0.1
 wheel | 0.36.2
 whitenoise | 5.2.0
 
