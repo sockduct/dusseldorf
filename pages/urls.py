@@ -1,7 +1,11 @@
 from django.urls import path
 
 from .views import (
-    AboutPageView, ContactPageView, ErrorPageView, LeaderboardPageView, SuccessPageView
+    AboutPageView,
+    ContactPageView,
+    ErrorPageView,
+    LeaderboardPageView,
+    SuccessPageView
 )
 
 urlpatterns = [

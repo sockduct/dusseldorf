@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
+from django.db.models import query
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -85,3 +87,18 @@ class PostListView(ListView):
     # Optional - choose friendlier name:
     # context_object_name = 'post_list'
     # Note - default context_object_name is 'object_list'
+
+class SearchResultsListView(ListView):
+    model = Post
+    template_name = 'search_results.html'
+
+    # Can either use queryset = ...
+    # queryset = Post.objects.filter(title__icontains='welcome')
+    #
+    # Or define get_queryset function:
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Post.objects.filter(
+            # "|" acts as "or" operator for Q:
+            Q(title__icontains=query) | Q(tags__name__contains=query)
+        )
